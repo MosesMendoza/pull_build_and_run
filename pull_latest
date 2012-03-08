@@ -16,7 +16,7 @@ echo "retrieving..."
 scp debbuilder:~/enterprise-dist/dists/$package.tar.gz .
 echo "done."
 echo "retrieving answer file $1"
-scp debbuilder:~/$1 .
+scp debbuilder:~/answer_files/$1 .
 
 echo "unpacking..."
 # if exists, remove
