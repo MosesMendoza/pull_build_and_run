@@ -1,0 +1,47 @@
+#!/bin/sh
+
+# script to pull latest build from debbuilder
+# take an answerfile as a parameter 1 
+# take an installer command as a parameter 2 
+
+dist="debian"
+ver="6"
+arch="i386"
+latest=`ssh pluto 'cat /opt/enterprise/ci-ready/LATEST'`
+
+package="puppet-enterprise-$latest-$dist-$ver-$arch"
+
+echo "Latest build: $latest"
+echo "retrieving..."
+scp pluto:/opt/enterprise/ci-ready/$package.tar.gz .
+echo "done."
+
+if [ -n "${1}" ] ; then
+  echo "retrieving answer file $1"
+  scp debbuilder:~/answer_files/$1 .
+  if [ $? -ne 0 ] ; then
+    exit 1
+  fi
+fi
+
+echo "unpacking..."
+# if exists, remove
+if [ -e ./"$package.tar.gz" ] ; then
+  rm ./"$package.tar" >/dev/null 2>&1
+  rm ./"$package" > /dev/null 2>&1
+fi
+
+# unpack
+gzip -d ./"$package.tar.gz"
+tar -xvf ./"$package.tar"
+
+if [ -n "$2" ] ; then
+	echo "running $2"
+	if [ $2 = "install" ] ; then
+	  ./$package/puppet-enterprise-installer -a $1
+  elif [ $2 = "uninstall" ] ; then
+    ./$package/puppet-enterprise-uninstaller -d -p -a $1
+  fi
+fi
+
+
