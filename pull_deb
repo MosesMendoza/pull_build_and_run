@@ -16,7 +16,7 @@ echo "retrieving..."
 scp debbuilder:~/enterprise-dist/dists/$package.tar.gz .
 echo "done."
 
-if [ -n $1 ] ; then
+if [ -n "$1" ] ; then
   echo "retrieving answer file $1"
   scp debbuilder:~/answer_files/$1 .
   if [ $? -ne 0 ] ; then
