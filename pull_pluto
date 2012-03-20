@@ -33,7 +33,7 @@ fi
 
 # unpack
 gzip -d ./"$package.tar.gz"
-tar -xvf ./"$package.tar"
+tar -xf ./"$package.tar"
 
 if [ -n "$2" ] ; then
 	echo "running $2"
