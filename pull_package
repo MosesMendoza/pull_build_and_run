@@ -1,0 +1,20 @@
+#!/bin/sh
+
+# script to pull latest build from debbuilder
+# take an answerfile as a parameter 1 
+# take an installer command as a parameter 2 
+
+dist="debian"
+branch="precise"
+version="12.04"
+arch="i386"
+
+package_folder="ubuntu-$version-$arch"
+package="pe-$1"
+echo "retrieving..."
+scp pluto:/opt/enterprise/repos/incoming/disparate/$branch/$package*.deb ../
+echo "done."
+
+echo "placing in enterprise-dist"
+mv ../pe-$1* ./packages/$package_folder/
+

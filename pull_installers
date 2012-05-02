@@ -1,0 +1,15 @@
+#!/bin/sh
+
+# script to pull latest build from debbuilder
+# take an answerfile as a parameter 1 
+# take an installer command as a parameter 2 
+
+package="puppet-enterprise-$latest-$dist-$ver-$arch"
+
+
+echo "retrieving installers"
+scp debbuilder:~/puppet-enterprise-installer .
+scp debbuilder:~/puppet-enterprise-upgrader .
+scp debbuilder:~/puppet-enterprise-uninstaller .
+echo "done."
+
