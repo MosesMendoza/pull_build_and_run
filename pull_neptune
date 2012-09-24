@@ -7,13 +7,13 @@
 dist="debian"
 ver="6"
 arch="i386"
-latest=`ssh pluto 'cat /opt/enterprise/ci-ready/LATEST'`
+latest=`ssh neptune 'cat /opt/enterprise/2.6/ci-ready/LATEST'`
 
 package="puppet-enterprise-$latest-$dist-$ver-$arch"
 
 echo "Latest build: $latest"
 echo "retrieving..."
-scp pluto:/opt/enterprise/ci-ready/$package.tar.gz .
+scp neptune:/opt/enterprise/2.6/ci-ready/$package.tar.gz .
 echo "done."
 
 if [ -n "${1}" ] ; then
